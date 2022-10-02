@@ -1,3 +1,6 @@
+
+require('dotenv').config();
+
 export class LoginPage {
   constructor(page) {
     this.page = page;
@@ -12,8 +15,8 @@ export class LoginPage {
       this.buttonFollowLogin.first().click(),
       this.page.waitForNavigation()
     ]);
-    await this.login.fill('r.akhmetzyanov@innopolis.ru');
-    await this.password.fill('Warcraft@0206');
+    await this.login.fill(process.env.LOGIN);
+    await this.password.fill(process.env.PASSWORD);
     await Promise.all([
       this.buttonLogin.click(),
       this.page.waitForNavigation()
