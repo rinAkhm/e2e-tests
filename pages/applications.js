@@ -6,7 +6,7 @@ export class Applications {
     this.login = new LoginPage(page);
   }
 
-  async goto(url) {
-    await this.page.goto(url);
+  async openLoginPage() {
+    await this.page.goto('/login_page');
   }
 } 

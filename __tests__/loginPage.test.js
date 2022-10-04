@@ -1,10 +1,15 @@
 // @ts-check
 import { Applications } from '../pages/applications.js';
-const { test, expect} = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
-test('open login page', async ({ page }) => {
-    const app = new Applications(page);
-    app.goto('https://dev.digitalprofile.innopolis.university/login_page');;
-    const expected = await app.login.auth();
-    await expect(expected).toMatch('Look up a student');
-})
+let app;
+
+test.beforeEach(async ({ page }) => {
+    app = new Applications(page);
+    await app.openLoginPage();
+});
+
+test('open login page', async () => { 
+    await app.login.auth();
+    expect(await app.login.isAuth()).toEqual(true);
+});

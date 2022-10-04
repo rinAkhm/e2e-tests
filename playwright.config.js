@@ -1,11 +1,6 @@
 // @ts-check
 const { devices } = require('@playwright/test');
-
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
+require('dotenv').config();
 
 
 /**
@@ -41,7 +36,7 @@ const config = {
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    // trace: 'on-first-retry',
     baseURL:'http://dev.digitalprofile.innopolis.university/',
     headless: false,
     screenshot: 'only-on-failure',
