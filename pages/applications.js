@@ -1,3 +1,4 @@
+// @ts-check
 import { LoginPage } from './login/login_page.js';
 
 export class Applications {

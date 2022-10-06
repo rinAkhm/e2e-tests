@@ -4,7 +4,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.26.1",
-    "playwright": "^1.26.1"
+    "playwright": "^1.26.1",
+    "winston": "^3.8.2"
   },
   "scripts": {
     "test": "playwright test"
