@@ -1,5 +1,5 @@
 // @ts-check
-import { logger, prepareName } from '../../config/logger.js'
+import { logger, filename } from '../../config/logger.js'
 
 export class LoginPage {
   constructor(page) {
@@ -21,7 +21,7 @@ export class LoginPage {
     return false;
   }
 
-  auth = async () => {
+  auth = async (data) => {
     // if (await this.page.$$(this.menuBarLocator).length) {
     //   await Promise.all([
     //     this.menuBar.click(),
@@ -42,12 +42,12 @@ export class LoginPage {
     ]);
     await this.login.fill(process.env.LOGIN);
     await this.password.fill(process.env.PASSWORD);
-    logger.log('info', `${prepareName(__filename)}-login to digital_profile login=${process.env.LOGIN} passsword=${process.env.PASSWORD}`);
+    logger.log('info', `${filename(__filename)}-login=${data.username} passsword=${data.passsword}`);
     await Promise.all([
       this.buttonLogin.click(),
       this.page.waitForNavigation()
     ]);
     await this.page.locator('h3').innerHTML();
-    logger.log('info', `${prepareName(__filename)}-It was found the text "Look up a student"`)
+    logger.log('info', `${filename(__filename)}-found text "Look up a student"`)
   }
 };

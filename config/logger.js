@@ -5,7 +5,7 @@ const { combine, timestamp, colorize, label, printf } = format;
 
 
 
-export const prepareName = (filed) => {
+export const filename = (filed = __filename) => {
   const { name } = path.parse(filed);
   return name
 };
