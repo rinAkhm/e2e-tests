@@ -22,13 +22,13 @@ export class LoginPage {
   }
 
   auth = async (data) => {
-    // if (await this.page.$$(this.menuBarLocator).length) {
-    //   await Promise.all([
-    //     this.menuBar.click(),
-    //     this.page.waitForNavigation(),
-    //     this.exitButton.click()
-    //   ])  
-    // }
+    if (await this.page.$$(this.menuBarLocator).length) {
+      await Promise.all([
+        this.menuBar.click(),
+        this.page.waitForNavigation(),
+        this.exitButton.click()
+      ])  
+    }
     if (await this.isAuth()) {
       await Promise.all([
         this.menuBar.click(),
@@ -37,17 +37,22 @@ export class LoginPage {
       ])  
     };   
     await Promise.all([
-      this.buttonFollowLogin.first().click(),
-      this.page.waitForNavigation()
+      this.page.waitForNavigation(),
+      this.buttonFollowLogin.first().click()
     ]);
     await this.login.fill(process.env.LOGIN);
     await this.password.fill(process.env.PASSWORD);
     logger.log('info', `${filename(__filename)}-login=${data.username} passsword=${data.passsword}`);
     await Promise.all([
-      this.buttonLogin.click(),
-      this.page.waitForNavigation()
+      this.page.waitForNavigation(),
+      this.buttonLogin.click()
     ]);
-    await this.page.locator('h3').innerHTML();
-    logger.log('info', `${filename(__filename)}-found text "Look up a student"`)
-  }
+  };
+
+  async openLoginPage() {
+    await this.page.goto('/login_page');
+    logger.log('info', `${filename(__filename)}-open login page"`)
+  };
+
 };
+

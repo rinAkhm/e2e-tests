@@ -9,10 +9,10 @@ let data;
 test.beforeEach(async ({ page }) => {
     app = new Applications(page);
     data = new LoginModel(process.env.LOGIN, process.env.PASSWORD);
-    await app.openLoginPage();
 });
 
-test('open login page', async () => { 
+test('login page in system', async () => {
+    await app.login.openLoginPage();
     await app.login.auth(data);
     expect(await app.login.isAuth()).toEqual(true);
 });
