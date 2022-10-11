@@ -38,7 +38,7 @@ const config = {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     // trace: 'on-first-retry',
     baseURL:'http://dev.digitalprofile.innopolis.university/',
-    headless: false,
+    headless: true,
     screenshot: 'only-on-failure',
 
   },

@@ -1,14 +1,14 @@
 // @ts-check
 
 export class SearchPersonModel {
-    constructor( email=null, fullNameLatin=null, fullNameRus=null, telegramAlias=null ) {
+    constructor( email='', fullNameLatin='', fullNameRus='', telegramAlias='' ) {
       this.email = email;
       this.fullNameLatin = fullNameLatin;
       this.fullNameRus = fullNameRus;
       this.telegramAlias = telegramAlias; 
     };
 
-    getEmail = () => {
-        return {email:'an.romanov@innopolis.university'};
+    static getEmail = () => {
+        return new SearchPersonModel(this.email='an.romanov@innopolis.university');
     };
   };
