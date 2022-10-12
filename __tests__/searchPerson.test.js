@@ -17,12 +17,17 @@ test.beforeEach(async ({ page }) => {
     await app.searchPerson.isAuth();
 });
 
-test('search person with valid data', async ({page}) => {
+test('search person with valid data', async () => {
     data = SearchPersonModel.getEmail();
-    await app.searchPerson.searchPersonByFullText(data);
-    const actual = await app.studentProfile.verifyStudentProfile(data);  
+    await app.searchPerson.searchPersonByFullText(data.email);
+    const actual = await app.studentProfile.verifyStudentProfile();
     await expect(actual).toBe(data.email);
-    await expect(page).toHaveURL(/student/i);
-
-    // expect(await app.searchPerson.findInfoEmail()).toHaveText(data.email);
+    await app.studentProfile.toHavePageUrl('student');
 });
+
+test('search person using dragAndDrop with valid data', async ()=> {
+    data = SearchPersonModel.getEmail();
+    await app.searchPerson.searchPersonByDropDown(data.email);
+    const actual = await app.studentProfile.verifyStudentProfile();
+    await expect(actual).toBe(data.email);
+})

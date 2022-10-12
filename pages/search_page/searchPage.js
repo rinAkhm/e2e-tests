@@ -33,8 +33,19 @@ export class SearchPage extends SearchPageLocators {
   
   async searchPersonByFullText (data) {
     await this.basePage.checkPropertiesIsDisabled(this._buttonSearch);
-    await this.basePage.enterElementText(this._inputSearch, data.email);
+    await this.basePage.enterElementText(this._inputSearch, data);
     await this.basePage.clickElement(this._buttonSearch);
-    logger.log('info', `${filename(__filename)}-choice email=${data.email}`)
+    logger.log('info', `${filename(__filename)}-choice email=${data}`)
+  }
+
+  async searchPersonByDropDown(data) {
+    const sliceData = data.slice(0,3);
+    await this.basePage.checkPropertiesIsDisabled(this._buttonSearch);
+    await this.basePage.enterElementText(this._inputSearch, sliceData);
+    logger.log('info', `${filename(__filename)}-input to field symbol=${sliceData}`)
+    await this.basePage.selectElementFromList(this._listEmails[0],
+      this._listEmails[1], this._listEmails[2], data);
+    await this.basePage.clickElement(this._buttonSearch);
+    logger.log('info', `${filename(__filename)}-choice email=${data}`)
   }
 }
