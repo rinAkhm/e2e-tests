@@ -31,13 +31,6 @@ export class SearchPage extends SearchPageLocators {
     await this.basePage.expectToBeTrue(state, 'you are not logged in, access is restricted');
   }
   
-  async searchPersonByFullText (data) {
-    await this.basePage.checkPropertiesIsDisabled(this._buttonSearch);
-    await this.basePage.enterElementText(this._inputSearch, data);
-    await this.basePage.clickElement(this._buttonSearch);
-    logger.log('info', `${filename(__filename)}-choice email=${data}`)
-  }
-
   async searchPersonByDropDown(data) {
     const sliceData = data.slice(0,3);
     await this.basePage.checkPropertiesIsDisabled(this._buttonSearch);
@@ -47,5 +40,17 @@ export class SearchPage extends SearchPageLocators {
       this._listEmails[1], this._listEmails[2], data);
     await this.basePage.clickElement(this._buttonSearch);
     logger.log('info', `${filename(__filename)}-choice email=${data}`)
+  }
+
+  async checkSearchInputField(data) {
+    await this.basePage.checkPropertiesIsDisabled(this._buttonSearch);
+    await this.basePage.enterElementText(this._inputSearch, data.fullname_rus);
+    await this.basePage.selectElementFromList(this._listEmails[0],
+      this._listEmails[1], this._listEmails[2], data.email);
+    return await this.basePage.findAttributValue(this._linkToPersonProfile, 'href');
+  }
+
+  async getStateSearchButton() {
+    return await this.basePage.findElement(this._buttonSearch);
   }
 }

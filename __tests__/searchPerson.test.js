@@ -26,24 +26,19 @@ test.beforeEach(async ({ page }) => {
   await app.searchPerson.isAuth();
 });
 
-
-records.forEach(data => {
-  test(`testing with ${data.test_case}`, async () => {
-    console.log(data.fullname_rus)
+test.describe('positive test cases', () => {
+  records.forEach(data => {
+    test(`check to search with field ${data.test_case}`, async () => {
+    const actual = await app.searchPerson.checkSearchInputField(data);
+    expect(await app.searchPerson.getStateSearchButton()).toBeEnabled();
+    expect(actual).toMatch(data.moodle_id);
   });
 });
 
-test('search person with valid data', async () => {
-  data = SearchPersonModel.getEmail();
-  await app.searchPerson.searchPersonByFullText(data.email);
-  const actual = await app.studentProfile.verifyStudentProfile();
-  await expect(actual).toBe(data.email);
-  await app.studentProfile.toHavePageUrl('student');
-});
-
-test('search person using dragAndDrop with valid data', async ()=> {
-  data = SearchPersonModel.getEmail();
-  await app.searchPerson.searchPersonByDropDown(data.email);
-  const actual = await app.studentProfile.verifyStudentProfile();
-  await expect(actual).toBe(data.email);
+  test('search person using dragAndDrop with valid data', async ()=> {
+    data = SearchPersonModel.getEmail();
+    await app.searchPerson.searchPersonByDropDown(data.email);
+    const actual = await app.studentProfile.verifyStudentProfile();
+    await expect(actual).toBe(data.email);
+  })
 })
