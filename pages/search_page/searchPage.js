@@ -10,7 +10,6 @@ export class SearchPage extends SearchPageLocators {
     this.page = page;
     this.basePage = new BasePage(this.page);
   }
-  
 
   async goto(){
     await this.basePage.gotoPage('/profile_search');

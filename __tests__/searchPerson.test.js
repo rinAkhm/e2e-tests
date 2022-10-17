@@ -1,13 +1,13 @@
-
-import { Applications } from '../lib/applications.js';
+// @ts-check
 import { LoginModel } from '../pages/login_page/model.js';
 import { SearchPersonModel } from '../pages/search_page/model.js';
-const path =  require('path');
-const { test, expect } = require('@playwright/test');
+import { test } from '../lib/applications.js';
+const { expect } = require('@playwright/test');
+
 const { parse } = require('csv-parse/sync');
 const fs = require('fs');
+const path =  require('path');
 
-let app;
 let loginData;
 let data;
 
@@ -18,27 +18,27 @@ const records = parse(fs.readFileSync(getFixturesPath('users.csv')), {
 });
 
 
-test.beforeEach(async ({ page }) => {
-  app = new Applications(page);
+test.beforeEach(async ({ loginPage, searchPerson }) => {
+  // app = new Applications(page);
   loginData = new LoginModel();
-  await app.login.goto(); 
-  await app.login.loginToApplication(loginData);
-  await app.searchPerson.isAuth();
+  await loginPage.goto(); 
+  await loginPage.loginToApplication(loginData);
+  await searchPerson.isAuth();
 });
 
 test.describe('positive test cases', () => {
   records.forEach(data => {
-    test(`check to search with field ${data.test_case}`, async () => {
-    const actual = await app.searchPerson.checkSearchInputField(data);
-    expect(await app.searchPerson.getStateSearchButton()).toBeEnabled();
+    test(`check to search with field ${data.test_case}`, async ({searchPerson}) => {
+    const actual = await searchPerson.checkSearchInputField(data);
+    expect(await searchPerson.getStateSearchButton()).toBeEnabled();
     expect(actual).toMatch(data.moodle_id);
   });
 });
 
-  test('search person using dragAndDrop with valid data', async ()=> {
+  test('search person using dragAndDrop with valid data', async ({ searchPerson, studentProfile })=> {
     data = SearchPersonModel.getEmail();
-    await app.searchPerson.searchPersonByDropDown(data.email);
-    const actual = await app.studentProfile.verifyStudentProfile();
+    await searchPerson.searchPersonByDropDown(data.email);
+    const actual = await studentProfile.verifyStudentProfile();
     await expect(actual).toBe(data.email);
   })
 })
