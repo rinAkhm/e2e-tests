@@ -9,6 +9,6 @@
     "winston": "^3.8.2"
   },
   "scripts": {
-    "test": "playwright test"
+    "test": "npx playwright test --project=chromium --workers 2"
   }
 }

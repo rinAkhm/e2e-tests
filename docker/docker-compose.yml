@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  dpf_ui_tests:
+    image:
+      ui_tests:ui_tests_latest
+    volumes:
+      - ui_report:/playwright-report/
+    ports:
+      - "3000:9323"
+    env_file:
+      - .env
+    container_name: ui-tests
+    command: start-tests
+volumes:
+  ui_report:
